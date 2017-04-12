@@ -6,4 +6,4 @@ SELECT TOP 5 ACTOR FROM
   ON (MOVIES.COUNTRY='USA')
   )
   GROUP BY ACTOR
-  ORDER BY performances ASC);
+  ORDER BY performances DESC);
