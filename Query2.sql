@@ -3,5 +3,6 @@ SELECT ACTOR, count('x') performances FROM
   FROM CASTS JOIN
   MOVIES
   ON (MOVIES.COUNTRY='USA')
-  ORDER BY ACTOR ASC)
-  GROUP BY ACTOR;
+  )
+  GROUP BY ACTOR
+  ORDER BY performances;
