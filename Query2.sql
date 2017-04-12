@@ -1,4 +1,4 @@
-SELECT ACTOR, count('x') performances FROM
+SELECT ACTOR, count(ACTOR) performances FROM
  (SELECT ACTOR, TITLE
   FROM CASTS JOIN
   MOVIES
