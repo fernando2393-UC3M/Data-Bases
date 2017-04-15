@@ -1,12 +1,12 @@
 SELECT ACTOR FROM
-(SELECT ACTOR, COUNT('x') view_datetime FROM
+(SELECT ACTOR, COUNT('x') MONTH_DATE FROM
 (SELECT TITLE, VIEW_DATETIME
 FROM TAPS_MOVIES JOIN
 CASTS
 ON (CASTS.TITLE = TAPS_MOVIES.TITLE)
 )
 GROUP BY ACTOR
-ORDER BY view_datetime DESC)
+ORDER BY MONTH_DATE DESC)
 WHERE ROWNUM <=1;
 
 --We need first to group actors by the number of taps each month and select the one who has the greatest number --> ROWNUM <=1
