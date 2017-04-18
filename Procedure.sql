@@ -1,0 +1,5 @@
+CREATE PROCEDURE billmonth
+AS
+BEGIN
+
+END
