@@ -1,4 +1,7 @@
-SELECT TITLE, MAX(MONTHMAX), MON
+SELECT TITLE, X.MON, MAX FROM
+((SELECT MAX(MAX) AS MAXX, MON FROM
+(
+	SELECT TITLE, MAX(MONTHMAX) AS MAX, MON
 FROM(
 	SELECT * FROM (
 (SELECT TITLE, MONTHMAX, A.MON FROM
@@ -83,4 +86,94 @@ FROM(
 					)
 				)
 				GROUP BY MON, TITLE
-				ORDER BY TO_DATE(MON, 'MON-YYYY') ASC;
+				ORDER BY TO_DATE(MON, 'MON-YYYY') ASC)
+				GROUP BY MON)X
+				JOIN
+				(SELECT TITLE, MAX(MONTHMAX) AS MAX, MON
+			FROM(
+				SELECT * FROM (
+			(SELECT TITLE, MONTHMAX, A.MON FROM
+			(
+			(SELECT MON, MAX(TOTALSUM) AS MONTHMAX
+					FROM
+			    (
+			      SELECT TITLE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY') AS MON, SUM(FEE) AS TOTALSUM
+						  FROM
+			        (
+			        (
+			          CONTRACTS
+			        NATURAL JOIN
+			        TAPS_MOVIES)
+								JOIN PRODUCTS ON (CONTRACT_TYPE=PRODUCTS.PRODUCT_NAME)
+			        )
+						GROUP BY TITLE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY')
+			      ORDER BY TITLE ASC
+						)
+						GROUP BY MON
+			      ORDER BY MON DESC
+						)A
+			      JOIN
+			      (
+			        SELECT TITLE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY') AS MON, SUM(FEE) AS TOTALSUM
+			  			  FROM
+			          (
+			          (
+			            CONTRACTS
+			          NATURAL JOIN
+			          TAPS_MOVIES)
+			  					JOIN PRODUCTS ON (CONTRACT_TYPE=PRODUCTS.PRODUCT_NAME)
+			          )
+			  			GROUP BY TITLE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY')
+			        ORDER BY TITLE ASC
+			      )B
+			      ON (MONTHMAX=TOTALSUM AND A.MON=B.MON)
+					)
+			      ORDER BY TO_DATE(A.MON, 'MON-YYYY')
+					)
+				)
+					UNION
+					SELECT * FROM
+						(
+						SELECT TITLE, MONTHMAX, A.MON FROM
+						(
+						(SELECT MON, MAX(TOTALSUM) AS MONTHMAX
+								FROM
+						    (
+									SELECT TITLE, SEASON, EPISODE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY') AS MON, SUM(FEE) AS TOTALSUM
+										FROM
+										(
+										(
+											CONTRACTS
+										NATURAL JOIN
+										TAPS_SERIES)
+											JOIN PRODUCTS ON (CONTRACT_TYPE=PRODUCTS.PRODUCT_NAME)
+										)
+									GROUP BY TITLE, SEASON, EPISODE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY')
+									ORDER BY TITLE ASC
+									)
+									GROUP BY MON
+						      ORDER BY MON DESC
+									)A
+						      JOIN
+						      (
+										SELECT TITLE, SEASON, EPISODE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY') AS MON, SUM(FEE) AS TOTALSUM
+						  			  FROM
+						          (
+						          (
+						            CONTRACTS
+						          NATURAL JOIN
+						          TAPS_SERIES)
+						  					JOIN PRODUCTS ON (CONTRACT_TYPE=PRODUCTS.PRODUCT_NAME)
+						          )
+						  			GROUP BY TITLE, SEASON, EPISODE, TO_CHAR(VIEW_DATETIME, 'MON-YYYY')
+						        ORDER BY TITLE ASC
+						      )B
+						      ON (MONTHMAX=TOTALSUM AND A.MON=B.MON)
+								)
+						      ORDER BY TO_DATE(A.MON, 'MON-YYYY')
+								)
+							)
+							GROUP BY MON, TITLE
+							ORDER BY TO_DATE(MON, 'MON-YYYY') ASC)Y
+							ON(X.MON=Y.MON AND MAXX=Y.MAX))
+							ORDER BY TO_DATE(X.MON, 'MON-YYYY') ASC;
