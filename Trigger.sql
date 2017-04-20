@@ -17,7 +17,7 @@ END IF;
 END TRIGGER_2;
 /
 
---Trigger donde for series, we have decided to crate two independent triggers for each case
+--Trigger done for series; we have decided to create two independent triggers for each case
 
 CREATE OR REPLACE TRIGGER TRIGGER_2_1
 BEFORE INSERT ON
