@@ -205,13 +205,13 @@ CONSTRAINT FK_licsS2 FOREIGN KEY (client) REFERENCES clients ON DELETE CASCADE
 
 
 CREATE TABLE invoices(
-contractId VARCHAR2(10),
+clientId VARCHAR2(10),
 month  NUMBER(2) ,
 year  NUMBER(4) ,
 inv_date DATE,
 amount NUMBER(8,2) NOT NULL,
-CONSTRAINT PK_invcs PRIMARY KEY (contractId,month,year),
-CONSTRAINT FK_invcs FOREIGN KEY (contractId) REFERENCES contracts
+CONSTRAINT PK_invcs PRIMARY KEY (clientId,month,year),
+CONSTRAINT FK_invcs FOREIGN KEY (clientId) REFERENCES contracts
 );
 
 
