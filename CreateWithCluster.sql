@@ -214,13 +214,12 @@ CONSTRAINT FK_licsS2 FOREIGN KEY (client) REFERENCES clients ON DELETE CASCADE
 
 
 CREATE TABLE invoices(
-clientId VARCHAR2(15),
-month  NUMBER(2) ,
-year  NUMBER(4) ,
-inv_date DATE,
+clientId VARCHAR2(15),  
+month  VARCHAR2(2) ,
+year  VARCHAR2(4) ,
 amount NUMBER(8,2) NOT NULL,
 CONSTRAINT PK_invcs PRIMARY KEY (clientId,month,year),
-CONSTRAINT FK_invcs FOREIGN KEY (clientId) REFERENCES contracts
+CONSTRAINT FK_invcs FOREIGN KEY (clientId) REFERENCES clients
 ) CLUSTER ID_CLIENTS (clientId);
 
 
