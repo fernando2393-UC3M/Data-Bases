@@ -167,7 +167,8 @@ CONSTRAINT PK_contracts PRIMARY KEY (contractId),
 CONSTRAINT FK_contracts1 FOREIGN KEY (clientId) REFERENCES clientS ON DELETE SET NULL,
 CONSTRAINT FK_contracts2 FOREIGN KEY (contract_type) REFERENCES products,
 CONSTRAINT CK_contracts CHECK (startdate<=enddate)
-); -- CLUSTER ID_CONTRACTS (contractId);
+); 
+-- CLUSTER ID_CONTRACTS (contractId);
 
 
 CREATE TABLE taps_movies(
@@ -178,7 +179,8 @@ title VARCHAR2(100) NOT NULL,
 CONSTRAINT PK_tapsM PRIMARY KEY (contractId,title,view_datetime),
 CONSTRAINT FK_tapsM1 FOREIGN KEY (contractId) REFERENCES contracts,
 CONSTRAINT FK_tapsM2 FOREIGN KEY (title) REFERENCES movies
-); --CLUSTER ID_CONTRACTS (contractId);
+); 
+--CLUSTER ID_CONTRACTS (contractId);
 
 
 CREATE TABLE taps_series(
@@ -191,7 +193,8 @@ episode NUMBER(3) NOT NULL,
 CONSTRAINT PK_tapsS PRIMARY KEY (contractId,title,season,episode,view_datetime),
 CONSTRAINT FK_tapsS1 FOREIGN KEY (contractId) REFERENCES contracts,
 CONSTRAINT FK_tapsS2 FOREIGN KEY (title,season) REFERENCES seasons
-); --CLUSTER ID_CONTRACTS (contractId);
+);
+--CLUSTER ID_CONTRACTS (contractId);
 
 
 CREATE TABLE lic_movies(
