@@ -182,7 +182,7 @@ title VARCHAR2(100) NOT NULL,
 CONSTRAINT PK_tapsM PRIMARY KEY (contractId,title,view_datetime),
 CONSTRAINT FK_tapsM1 FOREIGN KEY (contractId) REFERENCES contracts,
 CONSTRAINT FK_tapsM2 FOREIGN KEY (title) REFERENCES movies
-) CLUSTER TITLE_MOV (movie_title);
+) CLUSTER TITLE_MOV (title);
 --CLUSTER ID_CONTRACTS (contractId);
 
 
