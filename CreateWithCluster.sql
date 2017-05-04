@@ -37,11 +37,8 @@ DROP TABLE INVOICES CASCADE CONSTRAINTS;
 
 CREATE CLUSTER TITLE_MOV (movie_title VARCHAR2(100));
 CREATE CLUSTER TITLE_SER (title VARCHAR2(100));
---CREATE CLUSTER ID_CONTRACTS (contractId VARCHAR2(10));
 CREATE CLUSTER ID_CLIENTS (clienttId VARCHAR2(15));
-
-
-
+--CREATE CLUSTER ID_CONTRACTS (contractId VARCHAR2(10));
 
 -- ----------------------------------------------------
 -- -- Part II: Create all tables ----------------------
@@ -78,7 +75,6 @@ genre	VARCHAR2(70),
 CONSTRAINT PK_GENRES_MOVIES PRIMARY KEY (title,genre),
 CONSTRAINT FK_GENRES_MOVIES FOREIGN KEY (title) REFERENCES MOVIES ON DELETE CASCADE
 );
---CLUSTER TITLE_MOV (title)
 
 
 CREATE TABLE keywords_movies (
@@ -87,7 +83,6 @@ keyword		VARCHAR2(150),
 CONSTRAINT PK_KEYWORDS_MOVIES PRIMARY KEY (title,keyword),
 CONSTRAINT FK_KEYWORDS_MOVIES FOREIGN KEY (title) REFERENCES MOVIES ON DELETE CASCADE
 );
---CLUSTER TITLE_MOV (title)
 
 
 CREATE TABLE PLAYERS (
@@ -171,7 +166,6 @@ CONSTRAINT FK_contracts1 FOREIGN KEY (clientId) REFERENCES clientS ON DELETE SET
 CONSTRAINT FK_contracts2 FOREIGN KEY (contract_type) REFERENCES products,
 CONSTRAINT CK_contracts CHECK (startdate<=enddate)
 ) CLUSTER ID_CLIENTS (clientId);
--- CLUSTER ID_CONTRACTS (contractId);
 
 
 CREATE TABLE taps_movies(
@@ -182,8 +176,8 @@ title VARCHAR2(100) NOT NULL,
 CONSTRAINT PK_tapsM PRIMARY KEY (contractId,title,view_datetime),
 CONSTRAINT FK_tapsM1 FOREIGN KEY (contractId) REFERENCES contracts,
 CONSTRAINT FK_tapsM2 FOREIGN KEY (title) REFERENCES movies
-) CLUSTER TITLE_MOV (title);
---CLUSTER ID_CONTRACTS (contractId);
+);
+
 
 
 CREATE TABLE taps_series(
@@ -197,7 +191,7 @@ CONSTRAINT PK_tapsS PRIMARY KEY (contractId,title,season,episode,view_datetime),
 CONSTRAINT FK_tapsS1 FOREIGN KEY (contractId) REFERENCES contracts,
 CONSTRAINT FK_tapsS2 FOREIGN KEY (title,season) REFERENCES seasons
 );
---CLUSTER ID_CONTRACTS (contractId);
+
 
 
 CREATE TABLE lic_movies(
