@@ -152,6 +152,7 @@ CONSTRAINT CK_products1 CHECK (type IN ('C','V')),
 CONSTRAINT CK_products2 CHECK (PROMO <= 100)
 );
 
+CREATE INDEX IN_END ON contracts(enddate);
 
 CREATE TABLE contracts(
 contractId VARCHAR2(10),
